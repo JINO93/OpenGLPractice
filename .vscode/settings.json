@@ -4,6 +4,8 @@
         "istream": "cpp",
         "ostream": "cpp",
         "system_error": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "initializer_list": "cpp",
+        "string_view": "cpp"
     }
 }
