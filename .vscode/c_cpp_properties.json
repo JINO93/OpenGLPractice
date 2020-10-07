@@ -4,13 +4,13 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "D:/Development/MinGW/include/",
-                "D:/Development/MinGW/bin/../lib/gcc/mingw32/8.2.0/c++",
-                "D:/Development/MinGW/bin/../lib/gcc/mingw32/8.2.0/c++/mingw32",
-                "D:/Development/MinGW/bin/../lib/gcc/mingw32/8.2.0/c++/backward",
-                "D:/Development/MinGW/bin/../lib/gcc/mingw32/8.2.0/include",
-                "D:/Development/MinGW/bin/../lib/gcc/mingw32/8.2.0/../../../../include",
-                "D:/Development/MinGW/bin/../lib/gcc/mingw32/8.2.0/include-fixed",
+                "D:/Development/MinGW/include",
+                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/c++",
+                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/c++/mingw32",
+                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/c++/backward",
+                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/include",
+                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/../../../../include",
+                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/include-fixed",
                 "${workspaceFolder}/include"
             ],
             "defines": [
