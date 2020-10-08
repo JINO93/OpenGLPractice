@@ -1,5 +1,5 @@
-#include <Trianle.h>
-#include <Shape.h>
+#include <myGL/Trianle.h>
+#include <myGL/Shape.h>
 #include <glad/glad.h>
 
 //处理渲染数据

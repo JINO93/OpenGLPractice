@@ -2,26 +2,14 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 // #include <string.h>
-#include <ShaderUtil.h>
-#include <Trianle.h>
+#include <myGL/ShaderUtil.h>
+#include <myGL/RetangleWithTexture.h>
 
 using namespace std;
 
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
-
-const char *vetc_shader = "#version 330 core\n" 
-"layout(location = 0) in vec3 aPos\n;" 
-"void main(){\n"  
-"gl_Position = vec4(aPos.x,aPos.y,aPos.z,1.0);\n"  
-"}\n";
-
-const char *fragment_shader = "#version 330 core\n" 
-"out vec4 gl_FragColor;\n" 
-"void main(){\n" 
-"gl_FragColor = vec4(1.0,0.2,0.5,1.0);\n"  
-"}\n";
 
 
 void handleInput(GLFWwindow *window)
@@ -70,12 +58,7 @@ int main()
     // TODO 设置鼠标位置变化回调
     // glfwSetCursorPosCallback
 
-    //初始化gl程序
-    // int program = ShaderUtil::createProgram(vetc_shader,fragment_shader);
-    // if(!program){
-    //     return -1;
-    // }
-    Trianle trianle(".\\shader\\triangle_vertex.glsl",".\\shader\\triangle_fragment.glsl");
+    RetangleWithTexture trianle(".\\shader\\retangle_vertex.glsl",".\\shader\\retangle_fragment.glsl");
     trianle.init();
 
     
@@ -85,8 +68,9 @@ int main()
     {
         //处理输入事件
         handleInput(window);
-
+        // glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
         trianle.draw();
+        // glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
         // glfw: swap buffers and poll IO events (keyspressed/released, mouse moved etc.)
         // ---------------------------------------------------
@@ -95,7 +79,7 @@ int main()
     }
 
     //清理数据
-    
+    trianle.destroy();
 
     // glfw: terminate, clearing all previously allocated GLFWresources.
     //---------------------------------------------------------------

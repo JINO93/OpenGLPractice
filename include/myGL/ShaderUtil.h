@@ -1,13 +1,15 @@
 #ifndef SHADERUTIL_H
 #define SHADERUTIL_H
 
-#include <glad/glad.h>
 #include <iostream>
+#include <glad/glad.h>
+#include <stb_image.h>
+
 using namespace std;
 
 class ShaderUtil
 {
-public:
+  public:
     static int createShader(const char *source, int type)
     {
         int shader = glCreateShader(type);
@@ -52,11 +54,41 @@ public:
         return program;
     }
 
-    static void deleteProgram(int programId){
-        if(programId){
+    static void deleteProgram(int programId)
+    {
+        if (programId)
+        {
             glDeleteProgram(programId);
             // programId = 0;
         }
+    }
+
+    static int createTexture(const char *path)
+    {
+        unsigned int textureId;
+        glGenTextures(1, &textureId);
+        // glActiveTexture(textureLocation);
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        //设置纹理对象的环绕、采样方式
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        int width, height, channel;
+        unsigned char *data = stbi_load(path, &width, &height, &channel, 0);
+        if (data)
+        {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+            glGenerateMipmap(GL_TEXTURE_2D);
+        }
+        else
+        {
+            std::cout << "load img failed" << std::endl;
+            // glDeleteTextures
+            textureId = 0;
+        }
+        stbi_image_free(data);
+        return textureId;
     }
 };
 

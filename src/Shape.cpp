@@ -1,9 +1,10 @@
-#include <Shape.h>
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include <ShaderUtil.h>
+
+#include <myGL/Shape.h>
+#include <myGL/ShaderUtil.h>
 
 using namespace std;
 
