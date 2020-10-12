@@ -24,7 +24,7 @@ void RetangleWithTexture::init()
     glGenBuffers(1, &EBO);
 
     textureId = ShaderUtil::createTexture("./resource/texture/container.jpg");
-    textureId2 = ShaderUtil::createTexture("./resource/texture/awesomeface.png");
+    textureId2 = ShaderUtil::createTexture("./resource/texture/awesomeface.png",true);
 
     glBindVertexArray(VAO);
 
@@ -46,6 +46,8 @@ void RetangleWithTexture::init()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
+    //注意：设置uniform前需要先启用program！！！！！！！！！
+    glUseProgram(programId);
     glUniform1i(glGetUniformLocation(programId, "outTexture"), 0); 
     glUniform1i(glGetUniformLocation(programId, "outTexture2"), 1); 
 }
