@@ -4,6 +4,7 @@
 // #include <string.h>
 #include <myGL/ShaderUtil.h>
 #include <myGL/RetangleWithTexture.h>
+#include <myGL/CubeWithTexture.h>
 
 using namespace std;
 
@@ -58,7 +59,8 @@ int main()
     // TODO 设置鼠标位置变化回调
     // glfwSetCursorPosCallback
 
-    RetangleWithTexture trianle(".\\shader\\retangle_vertex.glsl",".\\shader\\retangle_fragment.glsl");
+    // RetangleWithTexture trianle(".\\shader\\retangle_vertex.glsl",".\\shader\\retangle_fragment.glsl");
+    CubeWithTexture trianle(".\\shader\\cube_vertex.glsl",".\\shader\\cube_fragment.glsl");
     trianle.init();
 
     

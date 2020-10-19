@@ -4,6 +4,10 @@
 #include <glad/glad.h>
 #include <stb_image.h>
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <GLFW/glfw3.h>
 
 //处理渲染数据
 float vertexs1[20] = {
@@ -46,10 +50,15 @@ void RetangleWithTexture::init()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
+    glm::mat4 tran = glm::mat4(1.0f);
+    tran = glm::rotate(tran,glm::radians(45.0f),glm::vec3(0.0,0.0,1.0));
+    tran = glm::scale(tran,glm::vec3(0.5,0.5,0.5));
+
     //注意：设置uniform前需要先启用program！！！！！！！！！
     glUseProgram(programId);
     glUniform1i(glGetUniformLocation(programId, "outTexture"), 0); 
     glUniform1i(glGetUniformLocation(programId, "outTexture2"), 1); 
+    glUniformMatrix4fv(glGetUniformLocation(programId, "transformM"), 1,GL_FALSE,glm::value_ptr(tran)); 
 }
 
 void RetangleWithTexture::draw()
