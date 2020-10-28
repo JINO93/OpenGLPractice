@@ -12,18 +12,61 @@ using namespace std;
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
+// RetangleWithTexture trianle(".\\shader\\retangle_vertex.glsl",".\\shader\\retangle_fragment.glsl");
+Shape *shape;
 
 void handleInput(GLFWwindow *window)
 {
+    IControllable *c = dynamic_cast<IControllable *>(shape);
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     {
         glfwSetWindowShouldClose(window, true);
+    }
+    else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+        if (c)
+        {
+            c->onKeyInput(GLFW_KEY_W);
+        }
+    }
+    else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        if (c)
+        {
+            c->onKeyInput(GLFW_KEY_S);
+        }
+    }
+    else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    {
+        if (c)
+        {
+            c->onKeyInput(GLFW_KEY_A);
+        }
+    }
+    else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    {
+        if (c)
+        {
+            c->onKeyInput(GLFW_KEY_D);
+        }
     }
 }
 
 void frameBufferSizeCallBack(GLFWwindow *window, int width, int height)
 {
     glViewport(0, 0, width, height);
+}
+
+void cursorPosCallback(GLFWwindow *window, double xpos, double ypos)
+{
+    if (IControllable *c = dynamic_cast<IControllable *>(shape))
+        c->onMouseMove(xpos, ypos);
+}
+
+void scrollCallBack(GLFWwindow *window, double xoffset, double yoffset)
+{
+    if (IControllable *c = dynamic_cast<IControllable *>(shape))
+        c->onScroll(xoffset, yoffset);
 }
 
 int main()
@@ -56,14 +99,14 @@ int main()
     }
     //设置窗口大小变化回调
     glfwSetFramebufferSizeCallback(window, frameBufferSizeCallBack);
-    // TODO 设置鼠标位置变化回调
-    // glfwSetCursorPosCallback
+    // 设置鼠标位置变化回调
+    glfwSetCursorPosCallback(window, cursorPosCallback);
+    // 设置滚轮回调
+    glfwSetScrollCallback(window, scrollCallBack);
 
-    // RetangleWithTexture trianle(".\\shader\\retangle_vertex.glsl",".\\shader\\retangle_fragment.glsl");
-    CubeWithTexture trianle(".\\shader\\cube_vertex.glsl",".\\shader\\cube_fragment.glsl");
-    trianle.init();
+    shape = new CubeWithTexture(".\\shader\\cube_vertex.glsl", ".\\shader\\cube_fragment.glsl");
+    shape->init();
 
-    
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -71,7 +114,7 @@ int main()
         //处理输入事件
         handleInput(window);
         // glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-        trianle.draw();
+        shape->draw();
         // glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
 
         // glfw: swap buffers and poll IO events (keyspressed/released, mouse moved etc.)
@@ -81,7 +124,7 @@ int main()
     }
 
     //清理数据
-    trianle.destroy();
+    shape->destroy();
 
     // glfw: terminate, clearing all previously allocated GLFWresources.
     //---------------------------------------------------------------

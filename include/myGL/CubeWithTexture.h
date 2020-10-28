@@ -2,11 +2,13 @@
 #define CUBEWITHTEXTURE_H
 
 #include "Shape.h"
+#include "IControllable.h"
 
-class CubeWithTexture : public Shape
+class CubeWithTexture : public Shape,virtual public IControllable
 {
   public:
-    CubeWithTexture(const char *vertexPath, const char *fragmentPath) : Shape(vertexPath, fragmentPath) {}
+    CubeWithTexture():Shape(){}
+    CubeWithTexture(const char *vertexPath, const char *fragmentPath) : Shape(vertexPath, fragmentPath) ,IControllable(){}
     ~CubeWithTexture(){}
     virtual void destroy();
 

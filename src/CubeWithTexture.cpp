@@ -1,6 +1,7 @@
 #include <myGL/CubeWithTexture.h>
-#include <myGL/Shape.h>
 #include <myGL/ShaderUtil.h>
+// #include <myGL/Shape.h>
+// #include <myGL/IControllable.h>
 #include <glad/glad.h>
 #include <stb_image.h>
 #include <iostream>
@@ -114,6 +115,18 @@ void CubeWithTexture::draw()
     glDrawArrays(GL_TRIANGLES,0,sizeof(vertexs)/sizeof(vertexs[0]));
     // glDrawElements(GL_TRIANGLES, sizeof(indexs1) / sizeof(indexs1[0]), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+}
+
+void IControllable::onKeyInput(int keyEvent){
+    std::cout << "onKey:" << keyEvent  << std::endl;
+}
+
+void IControllable::onMouseMove(double xpos, double ypos){
+    std::cout << "xP:" << xpos << "  yP:" << ypos << std::endl;
+}
+
+void IControllable::onScroll(double xoffset, double yoffset){
+    std::cout << "xOff:" << xoffset << "  yOff:" << yoffset << std::endl;
 }
 
 void CubeWithTexture::destroy()

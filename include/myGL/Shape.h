@@ -3,6 +3,7 @@
 
 class Shape{
 public:
+    Shape(){};
     Shape(const char *vertexPath,const char *fragmentPath);
     ~Shape(){}
     virtual void destroy();
