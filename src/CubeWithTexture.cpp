@@ -15,7 +15,7 @@ float CubeWithTexture::vertexs[] = {
         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,  
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
         -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
@@ -56,12 +56,19 @@ float CubeWithTexture::vertexs[] = {
 
 // float CubeWithTexture::tranPos[] = {0.0,0.0};
 
+float fov;
+glm::vec3 camPos = glm::vec3(0.0,0.0,-3.0);
+glm::vec3 frontPos = glm::vec3(0.0,0.0,1.0);
+glm::vec3 upPos = glm::vec3(0.0,1.0,0.0);
+float camSpeed = 0.005f;
+
 void CubeWithTexture::init()
 {
     glEnable(GL_DEPTH_TEST);
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
+    fov = 45.0f;
     textureId = ShaderUtil::createTexture("./resource/texture/container.jpg");
 
     glBindVertexArray(VAO);
@@ -82,18 +89,10 @@ void CubeWithTexture::init()
     glBindVertexArray(0);
 
 
-    glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view,glm::vec3(0.0,0.0,-2.0));
-
-    glm::mat4 projection = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(45.0f),1.33f,0.2f,100.0f);
-
     //注意：设置uniform前需要先启用program！！！！！！！！！
     glUseProgram(programId);
     glUniform1i(glGetUniformLocation(programId, "outTexture"), 0); 
     // glUniform1i(glGetUniformLocation(programId, "outTexture2"), 1); 
-    glUniformMatrix4fv(glGetUniformLocation(programId, "view"), 1,GL_FALSE,glm::value_ptr(view)); 
-    glUniformMatrix4fv(glGetUniformLocation(programId, "projection"), 1,GL_FALSE,glm::value_ptr(projection)); 
 }
 
 void CubeWithTexture::draw()
@@ -109,6 +108,13 @@ void CubeWithTexture::draw()
     model = glm::scale(model,glm::vec3(0.5,0.5,0.5));
     glUniformMatrix4fv(glGetUniformLocation(programId, "model"), 1,GL_FALSE,glm::value_ptr(model)); 
 
+    glm::mat4 view = glm::lookAt(camPos,camPos + frontPos,upPos);
+    glUniformMatrix4fv(glGetUniformLocation(programId, "view"), 1,GL_FALSE,glm::value_ptr(view)); 
+
+    glm::mat4 projection = glm::mat4(1.0f);
+    projection = glm::perspective(glm::radians(fov),1.33f,0.2f,100.0f);
+    glUniformMatrix4fv(glGetUniformLocation(programId, "projection"), 1,GL_FALSE,glm::value_ptr(projection)); 
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,textureId);
     glBindVertexArray(VAO);
@@ -119,6 +125,16 @@ void CubeWithTexture::draw()
 
 void IControllable::onKeyInput(int keyEvent){
     std::cout << "onKey:" << keyEvent  << std::endl;
+    if(GLFW_KEY_W == keyEvent){
+        camPos += camSpeed * frontPos;
+    }else if(GLFW_KEY_S == keyEvent){
+        camPos -= camSpeed * frontPos;
+    }else if(GLFW_KEY_A == keyEvent){
+        camPos += glm::normalize(glm::cross(frontPos,upPos)) * camSpeed;
+    }else if(GLFW_KEY_D == keyEvent){
+        camPos -= glm::normalize(glm::cross(frontPos,upPos)) * camSpeed;
+    }
+
 }
 
 void IControllable::onMouseMove(double xpos, double ypos){
@@ -127,6 +143,12 @@ void IControllable::onMouseMove(double xpos, double ypos){
 
 void IControllable::onScroll(double xoffset, double yoffset){
     std::cout << "xOff:" << xoffset << "  yOff:" << yoffset << std::endl;
+    fov += yoffset * 1.0f;
+    if(fov > 90.0f){
+        fov = 90.0f;
+    }else if(fov < 12.0f){
+        fov = 12.0f;
+    }
 }
 
 void CubeWithTexture::destroy()

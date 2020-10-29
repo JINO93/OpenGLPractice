@@ -21,6 +21,7 @@ class CubeWithTexture : public Shape,virtual public IControllable
     unsigned int textureVBO;
     unsigned int textureId;
     static float vertexs[];
+
 };
 
 #endif
