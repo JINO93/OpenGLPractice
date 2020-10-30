@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <GLFW/glfw3.h>
 
 float CubeWithTexture::vertexs[] = {
@@ -57,10 +58,17 @@ float CubeWithTexture::vertexs[] = {
 // float CubeWithTexture::tranPos[] = {0.0,0.0};
 
 float fov;
-glm::vec3 camPos = glm::vec3(0.0,0.0,-3.0);
-glm::vec3 frontPos = glm::vec3(0.0,0.0,1.0);
+glm::vec3 camPos = glm::vec3(0.0,0.0,3.0);
+glm::vec3 frontPos = glm::vec3(0.0,0.0,-1.0);
 glm::vec3 upPos = glm::vec3(0.0,1.0,0.0);
 float camSpeed = 0.005f;
+
+bool firstMouseMove = true;
+float moveSensitivity = 0.05f;
+float lastX = 0;
+float lastY = 0;
+float yaw = -90.0f;
+float pitch = 0.0f;
 
 void CubeWithTexture::init()
 {
@@ -139,6 +147,32 @@ void IControllable::onKeyInput(int keyEvent){
 
 void IControllable::onMouseMove(double xpos, double ypos){
     std::cout << "xP:" << xpos << "  yP:" << ypos << std::endl;
+    if(firstMouseMove){
+        lastX = xpos;
+        lastY = ypos;
+        firstMouseMove = false;
+    }
+
+    float dx = xpos - lastX;
+    float dy = lastY - ypos;
+    lastX = xpos;
+    lastY = ypos;
+
+    pitch += dy * moveSensitivity;
+    yaw += dx * moveSensitivity;
+
+    if(pitch > 89.0f){
+        pitch = 89.0f;
+    }else if(pitch < -89.0f){
+        pitch = -89.0f;
+    }
+
+    glm::vec3 front;
+    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+    front.y = sin(glm::radians(pitch));
+    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+    frontPos = glm::normalize(front);
+    std::cout << "front:" << glm::to_string(front) << std::endl;
 }
 
 void IControllable::onScroll(double xoffset, double yoffset){
