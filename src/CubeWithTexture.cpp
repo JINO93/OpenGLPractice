@@ -10,6 +10,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <GLFW/glfw3.h>
+#include <myGL/CameraHelper.h>
 
 float CubeWithTexture::vertexs[] = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -55,20 +56,13 @@ float CubeWithTexture::vertexs[] = {
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
-// float CubeWithTexture::tranPos[] = {0.0,0.0};
-
-float fov;
-glm::vec3 camPos = glm::vec3(0.0,0.0,3.0);
-glm::vec3 frontPos = glm::vec3(0.0,0.0,-1.0);
-glm::vec3 upPos = glm::vec3(0.0,1.0,0.0);
-float camSpeed = 0.005f;
-
 bool firstMouseMove = true;
-float moveSensitivity = 0.05f;
 float lastX = 0;
 float lastY = 0;
-float yaw = -90.0f;
-float pitch = 0.0f;
+
+float deltaTime = 0.0f;
+float lastTime = 0.0f;
+CameraHelper camHelper;
 
 void CubeWithTexture::init()
 {
@@ -76,7 +70,6 @@ void CubeWithTexture::init()
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
-    fov = 45.0f;
     textureId = ShaderUtil::createTexture("./resource/texture/container.jpg");
 
     glBindVertexArray(VAO);
@@ -105,6 +98,9 @@ void CubeWithTexture::init()
 
 void CubeWithTexture::draw()
 {
+    float time = glfwGetTime();
+    deltaTime = time - lastTime;
+    lastTime = time;
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -116,12 +112,8 @@ void CubeWithTexture::draw()
     model = glm::scale(model,glm::vec3(0.5,0.5,0.5));
     glUniformMatrix4fv(glGetUniformLocation(programId, "model"), 1,GL_FALSE,glm::value_ptr(model)); 
 
-    glm::mat4 view = glm::lookAt(camPos,camPos + frontPos,upPos);
-    glUniformMatrix4fv(glGetUniformLocation(programId, "view"), 1,GL_FALSE,glm::value_ptr(view)); 
-
-    glm::mat4 projection = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(fov),1.33f,0.2f,100.0f);
-    glUniformMatrix4fv(glGetUniformLocation(programId, "projection"), 1,GL_FALSE,glm::value_ptr(projection)); 
+    glUniformMatrix4fv(glGetUniformLocation(programId, "view"), 1,GL_FALSE,glm::value_ptr(camHelper.getViewMatrix())); 
+    glUniformMatrix4fv(glGetUniformLocation(programId, "projection"), 1,GL_FALSE,glm::value_ptr(camHelper.getProjectionMatrix())); 
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,textureId);
@@ -134,13 +126,13 @@ void CubeWithTexture::draw()
 void IControllable::onKeyInput(int keyEvent){
     std::cout << "onKey:" << keyEvent  << std::endl;
     if(GLFW_KEY_W == keyEvent){
-        camPos += camSpeed * frontPos;
+        camHelper.handleKeyboardEvent(FORWARD,deltaTime);
     }else if(GLFW_KEY_S == keyEvent){
-        camPos -= camSpeed * frontPos;
+        camHelper.handleKeyboardEvent(BACKWARD,deltaTime);
     }else if(GLFW_KEY_A == keyEvent){
-        camPos += glm::normalize(glm::cross(frontPos,upPos)) * camSpeed;
+        camHelper.handleKeyboardEvent(LEFT,deltaTime);
     }else if(GLFW_KEY_D == keyEvent){
-        camPos -= glm::normalize(glm::cross(frontPos,upPos)) * camSpeed;
+        camHelper.handleKeyboardEvent(RIGHT,deltaTime);
     }
 
 }
@@ -158,31 +150,12 @@ void IControllable::onMouseMove(double xpos, double ypos){
     lastX = xpos;
     lastY = ypos;
 
-    pitch += dy * moveSensitivity;
-    yaw += dx * moveSensitivity;
-
-    if(pitch > 89.0f){
-        pitch = 89.0f;
-    }else if(pitch < -89.0f){
-        pitch = -89.0f;
-    }
-
-    glm::vec3 front;
-    front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front.y = sin(glm::radians(pitch));
-    front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    frontPos = glm::normalize(front);
-    std::cout << "front:" << glm::to_string(front) << std::endl;
+    camHelper.onMove(dx,dy);
 }
 
 void IControllable::onScroll(double xoffset, double yoffset){
     std::cout << "xOff:" << xoffset << "  yOff:" << yoffset << std::endl;
-    fov += yoffset * 1.0f;
-    if(fov > 90.0f){
-        fov = 90.0f;
-    }else if(fov < 12.0f){
-        fov = 12.0f;
-    }
+    camHelper.onScroll(xoffset,yoffset);
 }
 
 void CubeWithTexture::destroy()
