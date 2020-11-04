@@ -90,6 +90,22 @@
           "message": 5
         }
       }
+    },
+    {
+      "label": "cmake-build",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "windows": {
+        "command": "buildProject.bat"
+      },
+      "linux": {
+        "command": "bash"
+      },
+      "args": [
+      ]
     }
   ]
 }
