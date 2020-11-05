@@ -56,6 +56,19 @@ float CubeWithTexture::vertexs[] = {
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
+ glm::vec3 cubePositions[] = {
+        glm::vec3( 0.0f,  0.0f,  0.0f),
+        glm::vec3( 2.0f,  5.0f, -15.0f),
+        glm::vec3(-1.5f, -2.2f, -2.5f),
+        glm::vec3(-3.8f, -2.0f, -12.3f),
+        glm::vec3( 2.4f, -0.4f, -3.5f),
+        glm::vec3(-1.7f,  3.0f, -7.5f),
+        glm::vec3( 1.3f, -2.0f, -2.5f),
+        glm::vec3( 1.5f,  2.0f, -2.5f),
+        glm::vec3( 1.5f,  0.2f, -1.5f),
+        glm::vec3(-1.3f,  1.0f, -1.5f)
+    };
+
 bool firstMouseMove = true;
 float lastX = 0;
 float lastY = 0;
@@ -107,19 +120,24 @@ void CubeWithTexture::draw()
 
     glUseProgram(programId);
 
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::rotate(model,glm::radians(45.0f) * (float)glfwGetTime(),glm::vec3(0.0,0.3,1.0));
-    model = glm::scale(model,glm::vec3(0.5,0.5,0.5));
-    glUniformMatrix4fv(glGetUniformLocation(programId, "model"), 1,GL_FALSE,glm::value_ptr(model)); 
-
     glUniformMatrix4fv(glGetUniformLocation(programId, "view"), 1,GL_FALSE,glm::value_ptr(camHelper.getViewMatrix())); 
     glUniformMatrix4fv(glGetUniformLocation(programId, "projection"), 1,GL_FALSE,glm::value_ptr(camHelper.getProjectionMatrix())); 
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,textureId);
     glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES,0,sizeof(vertexs)/sizeof(vertexs[0]));
-    // glDrawElements(GL_TRIANGLES, sizeof(indexs1) / sizeof(indexs1[0]), GL_UNSIGNED_INT, 0);
+
+    for(int i = 0; i < sizeof(cubePositions)/sizeof(cubePositions[0]);i++){
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::rotate(model,glm::radians(45.0f) * (float)glfwGetTime(),glm::vec3(0.0,0.3,1.0));
+        model = glm::scale(model,glm::vec3(0.5,0.5,0.5));
+        model = glm::translate(model,cubePositions[i]);
+        glUniformMatrix4fv(glGetUniformLocation(programId, "model"), 1,GL_FALSE,glm::value_ptr(model)); 
+        glDrawArrays(GL_TRIANGLES,0,sizeof(vertexs)/sizeof(vertexs[0]));
+        // glDrawElements(GL_TRIANGLES, sizeof(indexs1) / sizeof(indexs1[0]), GL_UNSIGNED_INT, 0);
+    }
+
+
     glBindVertexArray(0);
 }
 
