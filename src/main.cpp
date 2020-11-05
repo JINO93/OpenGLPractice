@@ -5,6 +5,7 @@
 #include <myGL/ShaderUtil.h>
 #include <myGL/RetangleWithTexture.h>
 #include <myGL/CubeWithTexture.h>
+#include <myGL/CustomModel.h>
 
 using namespace std;
 
@@ -104,7 +105,8 @@ int main()
     // 设置滚轮回调
     glfwSetScrollCallback(window, scrollCallBack);
 
-    shape = new CubeWithTexture(".\\shader\\cube_vertex.glsl", ".\\shader\\cube_fragment.glsl");
+    // shape = new CubeWithTexture(".\\shader\\cube_vertex.glsl", ".\\shader\\cube_fragment.glsl");
+    shape = new CustomModel(".\\shader\\model_vertex.glsl", ".\\shader\\model_fragment.glsl");
     shape->init();
 
     // render loop
@@ -129,6 +131,6 @@ int main()
     // glfw: terminate, clearing all previously allocated GLFWresources.
     //---------------------------------------------------------------
     glfwTerminate();
-    // system("pause");
+    system("pause");
     return 0;
 }

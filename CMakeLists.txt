@@ -21,9 +21,19 @@ aux_source_directory(src SOURCE_DIR)
 add_executable(${PROJECT_NAME} ${SOURCE_DIR})
 # 链接头文件
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include)
+
+# add_library(assimp STATIC IMPORTED)
+# set_target_properties(assimp PROPERTIES IMPORTED_LOCATION ${LIB_DIR}/libassimp.a)
+
+# add_library(IrrXML STATIC IMPORTED)
+# set_target_properties(IrrXML PROPERTIES IMPORTED_LOCATION ${LIB_DIR}/libIrrXML.a)
+
 # 链接三方库
-target_link_libraries(${PROJECT_NAME} PRIVATE 
+target_link_libraries(${PROJECT_NAME} 
     glad
     glfw3
     opengl32
+    libassimp.a
+    zlibstatic
+    IrrXML
 )
