@@ -13,7 +13,7 @@ using namespace std;
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 
-// RetangleWithTexture trianle(".\\shader\\retangle_vertex.glsl",".\\shader\\retangle_fragment.glsl");
+// RetangleWithTexture trianle("./shader/retangle_vertex.glsl","./shader/retangle_fragment.glsl");
 Shape *shape;
 
 void handleInput(GLFWwindow *window)
@@ -105,8 +105,8 @@ int main()
     // 设置滚轮回调
     glfwSetScrollCallback(window, scrollCallBack);
 
-    // shape = new CubeWithTexture(".\\shader\\cube_vertex.glsl", ".\\shader\\cube_fragment.glsl");
-    shape = new CustomModel(".\\shader\\model_vertex.glsl", ".\\shader\\model_fragment.glsl");
+    // shape = new CubeWithTexture("./shader/cube_vertex.glsl", "./shader/cube_fragment.glsl");
+    shape = new CustomModel();
     shape->init();
 
     // render loop

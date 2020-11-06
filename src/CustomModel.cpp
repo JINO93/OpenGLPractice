@@ -7,11 +7,10 @@
 #include <glm/gtx/string_cast.hpp>
 #include <GLFW/glfw3.h>
 
-// Model mModel("F:/CProject/OpenGLPractice/resource/model/nanosuit/nanosuit.obj");
 Model* mModel;
 
 void CustomModel::init(){
-    mModel = new Model("F:/CProject/OpenGLPractice/resource/model/nanosuit/nanosuit.obj");
+    mModel = new Model("resource/model/nanosuit/nanosuit.obj");
 
     glEnable(GL_DEPTH_TEST);
     glUseProgram(programId);
@@ -23,7 +22,11 @@ void CustomModel::init(){
         );
     glUniformMatrix4fv(glGetUniformLocation(programId, "view"), 1,GL_FALSE,glm::value_ptr(view));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f),1.33f,0.1f,100.0f); 
+    // todo 封装对着色器变量赋值的方法
     glUniformMatrix4fv(glGetUniformLocation(programId, "projection"), 1,GL_FALSE,glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(programId, "lightPos"), 1,GL_FALSE,glm::value_ptr(glm::vec3(1.2f, 1.0f, 2.0f)));
+    glUniformMatrix4fv(glGetUniformLocation(programId, "viewPos"), 1,GL_FALSE,glm::value_ptr(glm::vec3(0.0,10.0,30.0)));
+    glUniformMatrix4fv(glGetUniformLocation(programId, "lightColor"), 1,GL_FALSE,glm::value_ptr(glm::vec3(1.0,1.0,1.0)));
 }
 
 void CustomModel::draw(){
@@ -35,7 +38,6 @@ void CustomModel::draw(){
     model = glm::rotate(model,glm::radians(45.0f) * (float)glfwGetTime(),glm::vec3(0.0,1.0,0.0));
     glUniformMatrix4fv(glGetUniformLocation(programId, "model"), 1,GL_FALSE,glm::value_ptr(model)); 
 
-    // mModel.Draw(programId);
     mModel->Draw(programId);
 }
 

@@ -10,7 +10,7 @@
 class CustomModel : public Shape
 {
   public:
-    CustomModel():Shape(){}
+    CustomModel():Shape("./shader/model_vertex.glsl", "./shader/model_fragment.glsl"){}
     CustomModel(const char *vertexPath, const char *fragmentPath) : Shape(vertexPath, fragmentPath){}
     ~CustomModel(){}
     virtual void destroy();
