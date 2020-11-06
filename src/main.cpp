@@ -131,6 +131,6 @@ int main()
     // glfw: terminate, clearing all previously allocated GLFWresources.
     //---------------------------------------------------------------
     glfwTerminate();
-    system("pause");
+    // system("pause");
     return 0;
 }

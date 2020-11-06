@@ -5,6 +5,7 @@
 // #endif
 
 #include <myGl/Shape.h>
+// #include <model/Model.h>
 
 class CustomModel : public Shape
 {
@@ -18,7 +19,7 @@ class CustomModel : public Shape
     virtual void draw();
 
 //   private:
-    // Model* mModel;
+//     Model* mModel;
 
 };
 
