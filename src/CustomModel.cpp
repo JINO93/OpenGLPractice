@@ -12,7 +12,7 @@ glm::vec3 lampPos(0.5f, 1.0f, 1.5f);
 
 
 void CustomModel::init(){
-    mModel = new Model("resource/model/nanosuit/nanosuit.obj");
+    mModel = new Model("resource/model/sophia/rp_sophia_animated_003_idling.fbx");
 
     glEnable(GL_DEPTH_TEST);
     glUseProgram(programId);
@@ -56,8 +56,8 @@ void CustomModel::draw(){
     glUseProgram(programId);
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::rotate(model,glm::radians(45.0f) * (float)glfwGetTime(),glm::vec3(0.0,1.0,0.0));
-    model = glm::scale(model,glm::vec3(0.15,0.15,0.15));
-    model = glm::translate(model,glm::vec3(0.0,-8.0,0.0));
+    model = glm::scale(model,glm::vec3(0.015,0.015,0.015));
+    model = glm::translate(model,glm::vec3(0.0,-58.0,0.0));
     glUniformMatrix4fv(glGetUniformLocation(programId, "model"), 1,GL_FALSE,glm::value_ptr(model)); 
 
     mModel->Draw(programId);
