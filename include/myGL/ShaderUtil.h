@@ -5,6 +5,8 @@
 #include <string>
 #include <glad/glad.h>
 #include <stb_image.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 using namespace std;
 
@@ -97,6 +99,42 @@ class ShaderUtil
         }
         stbi_image_free(data);
         return textureId;
+    }
+
+    static void setUniform1i(int programId,const char* name,int v1){
+        glUniform1i(glGetUniformLocation(programId,name),v1);
+    }
+
+    static void setUniform1f(int programId,const char* name,float v1){
+        glUniform1f(glGetUniformLocation(programId,name),v1);
+    }
+
+    static void setUniform2f(int programId,const char* name,glm::vec2 value){
+        glUniform2fv(glGetUniformLocation(programId,name),1,&value[0]);
+    }
+
+    static void setUniform2f(int programId,const char* name,float v1,float v2){
+        glUniform2f(glGetUniformLocation(programId,name),v1,v2);
+    }
+
+    static void setUniform3f(int programId,const char* name,glm::vec3 value){
+        glUniform3fv(glGetUniformLocation(programId,name),1,&value[0]);
+    }
+
+    static void setUniform3f(int programId,const char* name,float v1,float v2,float v3){
+        glUniform3f(glGetUniformLocation(programId,name),v1,v2,v3);
+    }
+
+    static void setUniform4f(int programId,const char* name,glm::vec4 value){
+        glUniform4fv(glGetUniformLocation(programId,name),1,&value[0]);
+    }
+
+    static void setUniform4f(int programId,const char* name,float v1,float v2,float v3,float v4){
+        glUniform4f(glGetUniformLocation(programId,name),v1,v2,v3,v4);
+    }
+
+    static void setMatrix(int programId,const char* name,glm::mat4 value){
+        glUniformMatrix4fv(glGetUniformLocation(programId,name),1,GL_FALSE,glm::value_ptr(value));
     }
 };
 
