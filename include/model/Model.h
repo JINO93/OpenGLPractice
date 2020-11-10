@@ -205,6 +205,18 @@ private:
 unsigned int TextureFromFile(const char *path, const string &directory, bool gamma)
 {
     string filename = string(path);
+    if(filename[0] == '.'){
+        std::cout << "start with dot" << std::endl;
+        int index = filename.find("\\");
+        if(!index){
+            index = filename.find("/");
+        }
+        filename = filename.substr(index);
+    }
+    int sIndex = 0;
+    while(sIndex = filename.find("\\")){
+        filename = filename.replace(sIndex,1,"/");
+    }
     filename = directory + '/' + filename;
 
     unsigned int textureID;
@@ -235,7 +247,7 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
     }
     else
     {
-        std::cout << "Texture failed to load at path: " << path << std::endl;
+        std::cout << "Texture failed to load at path: " << filename << std::endl;
         stbi_image_free(data);
     }
 
