@@ -11,7 +11,7 @@
 Model* mModel;
 
 void CustomModel::init(){
-    mModel = new Model("resource/model/sophia/rp_sophia_animated_003_idling.fbx");
+    mModel = new Model("resource/model/nanosuit/nanosuit.obj");
 
     glEnable(GL_DEPTH_TEST);
     glUseProgram(programId);

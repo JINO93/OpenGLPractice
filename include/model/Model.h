@@ -214,7 +214,7 @@ unsigned int TextureFromFile(const char *path, const string &directory, bool gam
         filename = filename.substr(index);
     }
     int sIndex = 0;
-    while(sIndex = filename.find("\\")){
+    while(sIndex = filename.find("\\") != string::npos){
         filename = filename.replace(sIndex,1,"/");
     }
     filename = directory + '/' + filename;
