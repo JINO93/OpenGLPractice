@@ -1,3 +1,3 @@
-bin/OpenGLPractice.exe
+bin/*.exe
 build
-bin/libOpenGLPractice.dll.a
+bin/*.dll.a
