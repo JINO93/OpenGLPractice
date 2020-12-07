@@ -2,6 +2,6 @@
 rd /s /q build
 md build
 cd build
-cmake -G"Unix Makefiles" ../
+cmake -G"MinGW Makefiles" ../
 make -j4
 cd ..

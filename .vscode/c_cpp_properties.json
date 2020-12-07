@@ -4,13 +4,12 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "D:/Development/MinGW/include",
-                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/c++",
-                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/c++/mingw32",
-                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/c++/backward",
-                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/include",
-                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/../../../../include",
-                "D:/Development/MinGW/bin/lib/gcc/mingw32/8.2.0/include-fixed",
+                "D:/Development/mingw-w64/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include/c++",
+                "D:/Development/mingw-w64/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32",
+                "D:/Development/mingw-w64/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include/c++/backward",
+                "D:/Development/mingw-w64/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include",
+                "D:/Development/mingw-w64/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/include-fixed",
+                "D:/Development/mingw-w64/mingw32/bin/../lib/gcc/i686-w64-mingw32/8.1.0/../../../../i686-w64-mingw32/include",
                 "${workspaceFolder}/include"
             ],
             "defines": [
@@ -18,10 +17,11 @@
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "D:/Development/MinGW/bin/gcc.exe",
+            "compilerPath": "D:/Development/mingw-w64/mingw32/bin/gcc.exe",
             "cStandard": "c11",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64"
+            "intelliSenseMode": "gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

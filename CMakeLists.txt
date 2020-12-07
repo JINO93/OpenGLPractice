@@ -6,6 +6,8 @@ project(OpenGLPractice)
 # 设置可执行文件生成路径
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
+# set(CMAKE_CXX_STANDARD 17)
+
 # 设置源文件
 # set(SOURCES 
 #     src/main.cpp
@@ -36,4 +38,30 @@ target_link_libraries(${PROJECT_NAME}
     assimp
     zlibstatic
     IrrXML
+    ${LIB_DIR}/libopencv_calib3d3412.a
+    ${LIB_DIR}/libopencv_core3412.a
+    ${LIB_DIR}/libopencv_dnn3412.a
+    ${LIB_DIR}/libopencv_features2d3412.a
+    ${LIB_DIR}/libopencv_flann3412.a
+    ${LIB_DIR}/libopencv_highgui3412.a
+    ${LIB_DIR}/libopencv_imgcodecs3412.a
+    ${LIB_DIR}/libopencv_imgproc3412.a
+    ${LIB_DIR}/libopencv_ml3412.a
+    ${LIB_DIR}/libopencv_objdetect3412.a
+    ${LIB_DIR}/libopencv_photo3412.a
+    ${LIB_DIR}/libopencv_shape3412.a
+    ${LIB_DIR}/libopencv_stitching3412.a
+    ${LIB_DIR}/libopencv_superres3412.a
+    ${LIB_DIR}/libopencv_ts3412.a
+    ${LIB_DIR}/libopencv_video3412.a
+    ${LIB_DIR}/libopencv_videoio3412.a
+    ${LIB_DIR}/libopencv_videostab3412.a
+    ${LIB_DIR}/liblibtiff.a
+    ${LIB_DIR}/liblibjpeg-turbo.a
+    ${LIB_DIR}/liblibjasper.a
+    ${LIB_DIR}/liblibwebp.a
+    ${LIB_DIR}/liblibprotobuf.a
+    ${LIB_DIR}/liblibpng.a
+    ${LIB_DIR}/libIlmImf.a
+    ${LIB_DIR}/libquirc.a
 )

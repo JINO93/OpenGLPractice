@@ -70,7 +70,7 @@ void scrollCallBack(GLFWwindow *window, double xoffset, double yoffset)
         c->onScroll(xoffset, yoffset);
 }
 
-int main()
+int main2()
 {
     // glfw: initialize and configure
     // ------------------------------
