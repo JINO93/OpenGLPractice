@@ -6,6 +6,7 @@
 #include <myGL/RetangleWithTexture.h>
 #include <myGL/CubeWithTexture.h>
 #include <myGL/CustomModel.h>
+#include <myGL/Trianle.h>
 
 using namespace std;
 
@@ -105,7 +106,6 @@ int main()
     // 设置滚轮回调
     glfwSetScrollCallback(window, scrollCallBack);
 
-    // shape = new CubeWithTexture("./shader/cube_vertex.glsl", "./shader/cube_fragment.glsl");
     shape = new CustomModel();
     shape->init();
 

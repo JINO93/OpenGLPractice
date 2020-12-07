@@ -6,7 +6,7 @@
 class RetangleWithTexture : public Shape
 {
   public:
-    // RetangleWithTexture():Shape(".\\shader\\triangle_vertex.glsl",".\\shader\\triangle_fragment.glsl") {}
+    RetangleWithTexture():Shape("./shader/triangle_vertex.glsl","./shader/triangle_fragment.glsl") {}
     RetangleWithTexture(const char *vertexPath, const char *fragmentPath) : Shape(vertexPath, fragmentPath) {}
     ~RetangleWithTexture(){}
     virtual void destroy();

@@ -7,7 +7,7 @@
 class CubeWithTexture : public Shape,virtual public IControllable
 {
   public:
-    CubeWithTexture():Shape(){}
+    CubeWithTexture():Shape("./shader/cube_vertex.glsl", "./shader/cube_fragment.glsl"){}
     CubeWithTexture(const char *vertexPath, const char *fragmentPath) : Shape(vertexPath, fragmentPath) ,IControllable(){}
     ~CubeWithTexture(){}
     virtual void destroy();
