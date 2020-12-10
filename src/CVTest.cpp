@@ -5,9 +5,10 @@
 using namespace cv;
 int main()
 {
-    Mat img=imread("resource/container.jpg");
+    Mat img=imread("resource/texture/container.jpg");
     imshow("image",img);
     waitKey();
     // printf("Congratulasions! It works!\n");
+    // system("pause");
     return 0;
 }

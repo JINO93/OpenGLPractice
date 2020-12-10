@@ -17,6 +17,11 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIB_DIR ${PROJECT_SOURCE_DIR}/lib)
 link_directories(${LIB_DIR})
 
+# OpenCV
+set(OpenCV_DIR "E:/dowload/opencv-3.4.12/buildt/install")
+FIND_PACKAGE(OpenCV REQUIRED)
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+
 # 查找src下所有源文件并存储在 SOURCE_DIR
 aux_source_directory(src SOURCE_DIR)
 # 指定生成目标
@@ -38,30 +43,5 @@ target_link_libraries(${PROJECT_NAME}
     assimp
     zlibstatic
     IrrXML
-    ${LIB_DIR}/libopencv_calib3d3412.a
-    ${LIB_DIR}/libopencv_core3412.a
-    ${LIB_DIR}/libopencv_dnn3412.a
-    ${LIB_DIR}/libopencv_features2d3412.a
-    ${LIB_DIR}/libopencv_flann3412.a
-    ${LIB_DIR}/libopencv_highgui3412.a
-    ${LIB_DIR}/libopencv_imgcodecs3412.a
-    ${LIB_DIR}/libopencv_imgproc3412.a
-    ${LIB_DIR}/libopencv_ml3412.a
-    ${LIB_DIR}/libopencv_objdetect3412.a
-    ${LIB_DIR}/libopencv_photo3412.a
-    ${LIB_DIR}/libopencv_shape3412.a
-    ${LIB_DIR}/libopencv_stitching3412.a
-    ${LIB_DIR}/libopencv_superres3412.a
-    ${LIB_DIR}/libopencv_ts3412.a
-    ${LIB_DIR}/libopencv_video3412.a
-    ${LIB_DIR}/libopencv_videoio3412.a
-    ${LIB_DIR}/libopencv_videostab3412.a
-    ${LIB_DIR}/liblibtiff.a
-    ${LIB_DIR}/liblibjpeg-turbo.a
-    ${LIB_DIR}/liblibjasper.a
-    ${LIB_DIR}/liblibwebp.a
-    ${LIB_DIR}/liblibprotobuf.a
-    ${LIB_DIR}/liblibpng.a
-    ${LIB_DIR}/libIlmImf.a
-    ${LIB_DIR}/libquirc.a
+    ${OpenCV_LIBS}
 )

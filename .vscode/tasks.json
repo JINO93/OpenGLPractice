@@ -106,6 +106,22 @@
       },
       "args": [
       ]
+    },
+    {
+      "label": "cmake-build&run",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "windows": {
+        "command": "buildProject.bat"
+      },
+      "linux": {
+        "command": "bash"
+      },
+      "args": [
+      ]
     }
   ]
 }
