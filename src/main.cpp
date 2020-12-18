@@ -7,6 +7,7 @@
 #include <myGL/CubeWithTexture.h>
 #include <myGL/CustomModel.h>
 #include <myGL/Trianle.h>
+#include <myGL/InstanceScene.h>
 
 using namespace std;
 
@@ -106,7 +107,7 @@ int main()
     // 设置滚轮回调
     glfwSetScrollCallback(window, scrollCallBack);
 
-    shape = new CustomModel();
+    shape = new InstanceScene();
     shape->init();
 
     // render loop

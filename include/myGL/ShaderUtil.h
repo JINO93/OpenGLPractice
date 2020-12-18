@@ -1,8 +1,11 @@
 #ifndef SHADERUTIL_H
 #define SHADERUTIL_H
 
-#include <iostream>
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
 #include <glad/glad.h>
 #include <stb_image.h>
 #include <glm/glm.hpp>
@@ -13,10 +16,15 @@ using namespace std;
 class ShaderUtil
 {
   public:
-    static int createShader(const char *source, int type)
+    static int createShader(const char *path, int type)
     {
+        // cout << "createShader :" << type << endl; 
         int shader = glCreateShader(type);
-        glShaderSource(shader, 1, &source, NULL);
+        string resStr = readShaderFromFile(path);
+        // std::cout << "shaderSource:" << resStr << endl;
+        const char* shaderSource = resStr.c_str();
+        // std::cout << "shaderSource:" << shaderSource << endl;
+        glShaderSource(shader, 1, &shaderSource, NULL);
         glCompileShader(shader);
         int res;
         char infoLog[512];
@@ -24,21 +32,55 @@ class ShaderUtil
         if (!res)
         {
             glGetShaderInfoLog(shader, 512, NULL, infoLog);
-            cout << "craete shader " << type << " failed error:" << infoLog << endl;
+            cout << "craete shader " << type << " failed, source:" << shaderSource << " error:" << infoLog << endl;
             return 0;
         }
         return shader;
     }
 
-    static int createProgram(const char *vetShaderSource, const char *fragShaderSource)
-    {
-        int vShader = createShader(vetShaderSource, GL_VERTEX_SHADER);
-        if (!vShader)
-            return 0;
-        int fShader = createShader(fragShaderSource, GL_FRAGMENT_SHADER);
-        if (!fShader)
-            return 0;
+    static string readShaderFromFile(const char *shaderPath){
+        cout << "read shader from path:" << shaderPath << endl;
+        // 1. 从文件路径中获取顶点/片段着色器
+        std::string shaderCode;
+        std::ifstream shaderFile;
+        // 保证ifstream对象可以抛出异常：
+        shaderFile.exceptions (std::ifstream::failbit | std::ifstream::badbit);
+        try 
+        {
+            // 打开文件
+            std::stringstream shaderStream;
+            shaderFile.open(shaderPath,ios::in);
 
+            // 读取文件的缓冲内容到数据流中
+            shaderStream << shaderFile.rdbuf();
+
+            // 关闭文件处理器
+            shaderFile.close();
+
+            // 转换数据流到string
+            shaderCode   = shaderStream.str();
+            // result = shaderCode.c_str();
+            // std::cout << "res:" << result << endl;
+            return shaderCode;
+        }
+        catch(std::ifstream::failure e)
+        {
+            std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ :" << e.what() <<std::endl;
+        }
+    }
+
+    static int createProgram(const char *vetShaderPath, const char *fragShaderPath)
+    {
+        int vShader = createShader(vetShaderPath, GL_VERTEX_SHADER);
+        if (!vShader){
+            cout << "create vertex shader failed, shader source:" << vetShaderPath << endl;
+            return 0;
+        }
+        int fShader = createShader(fragShaderPath, GL_FRAGMENT_SHADER);
+        if (!fShader){
+            cout << "create fragment shader failed, shader source:" << fragShaderPath << endl;
+            return 0;
+        }
         int program = glCreateProgram();
         glAttachShader(program, vShader);
         glAttachShader(program, fShader);
