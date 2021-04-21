@@ -46,6 +46,7 @@ void Grid::draw()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(programId);
+    ShaderUtil::setUniform1f(programId,"u_time",glfwGetTime());
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES,sizeof(rectIndexs1)/sizeof(rectIndexs1[0]),GL_UNSIGNED_INT,0);
     glBindVertexArray(0);

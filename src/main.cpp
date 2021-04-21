@@ -7,6 +7,7 @@
 #include <myGL/CubeWithTexture.h>
 #include <myGL/CustomModel.h>
 #include <myGL/Grid.h>
+#include <windows.h>
 
 using namespace std;
 
