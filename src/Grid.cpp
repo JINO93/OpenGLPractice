@@ -3,11 +3,11 @@
 #include <myGL/ShaderUtil.h>
 #include <GLFW/glfw3.h>
 
-float rectVertexs[12] = {
-    -1.0f,  1.0f,   0.0f,
-    -1.0f, -1.0f,   0.0f, 
-     1.0f, -1.0f,  0.0f,
-     1.0f,  1.0f,   0.0f
+float rectVertexs[20] = {
+    -1.0f,  1.0f,   0.0f,  0.0f,1.0f,
+    -1.0f, -1.0f,   0.0f,  0.0f,0.0f,
+     1.0f, -1.0f,  0.0f,   1.0f,0.0f,
+     1.0f,  1.0f,   0.0f,  1.0f,1.0f
 };
 
 unsigned int rectIndexs1[6] = {
@@ -30,14 +30,19 @@ void Grid::init(){
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(rectIndexs1), rectIndexs1, GL_STATIC_DRAW);
 
     //顶点数据
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3*sizeof(float)));
+    glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
     glUseProgram(programId);
     ShaderUtil::setUniform2f(programId,"screenSize",800.0,600.0);
+
+    texture0Id = ShaderUtil::createTexture("./resource/texture/awesomeface.png",true);
+    ShaderUtil::setUniform1i(programId,"texture0", 0);
 }
 
 void Grid::draw()
@@ -47,6 +52,8 @@ void Grid::draw()
 
     glUseProgram(programId);
     ShaderUtil::setUniform1f(programId,"u_time",glfwGetTime());
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D,texture0Id);
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES,sizeof(rectIndexs1)/sizeof(rectIndexs1[0]),GL_UNSIGNED_INT,0);
     glBindVertexArray(0);

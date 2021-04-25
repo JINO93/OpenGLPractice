@@ -15,6 +15,7 @@ class Grid : public Shape
     virtual void draw();
 
   private:
+    int texture0Id;
     unsigned int VAO;
     unsigned int VBO;
     unsigned int EBO;
