@@ -10,8 +10,8 @@ void main(){
     float maxScale = 0.7;
     float dur = 0.5;
     float time = mod(u_time,dur);
-    float s = 1 + maxScale * abs(sin(time * 3.14/dur));
-    s = 1.0;
+//    float s = 1 + maxScale * abs(sin(time * 3.14/dur));
+    float s = 1.0;
     gl_Position = vec4(aPos.x * s,aPos.y * s,aPos.z,1.0);
     outTexPos = texPos;
 }
